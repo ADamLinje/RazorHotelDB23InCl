@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorHotelDB23InCl", "RazorHotelDB23InCl\RazorHotelDB23InCl.csproj", "{CC16843D-8B69-42E5-B492-B1B4F9EB9051}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectHotel23", "TestProjectHotel23\TestProjectHotel23.csproj", "{6A6369B9-45CB-4DD8-976E-26E55525134A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC16843D-8B69-42E5-B492-B1B4F9EB9051}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC16843D-8B69-42E5-B492-B1B4F9EB9051}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC16843D-8B69-42E5-B492-B1B4F9EB9051}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC16843D-8B69-42E5-B492-B1B4F9EB9051}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A6369B9-45CB-4DD8-976E-26E55525134A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6369B9-45CB-4DD8-976E-26E55525134A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6369B9-45CB-4DD8-976E-26E55525134A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6369B9-45CB-4DD8-976E-26E55525134A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AA84C080-E4C3-43B5-883A-DED0FC0BFDF0}
+	EndGlobalSection
+EndGlobal
