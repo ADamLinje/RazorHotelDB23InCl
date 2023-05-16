@@ -9,8 +9,8 @@ namespace RazorHotelDB23InCl.Services
         private string queryString = "select * from Room Where Hotel_No = @HotelID";
         private string queryStringFromID = "select * from Room Where Room_No = @ID and Hotel_No = @HotelID";
         private string insertSql = "insert into Room Values(@ID, @HotelId, @Type, @Pris)";
-        private string deleteSql = "delete from Room Where Room_No = @ID and Hotel_No = HotelID";
-        private string updateSql = "update Room Set Room_No = @ID, Name = @Navn,Address= @Adresse where Room_No = @ID";
+        private string deleteSql = "delete from Room Where Room_No = @ID and Hotel_No = @HotelID";
+        private string updateSql = "update Room Set Room_No = @ID, Types = @Types, Price= @Price where Room_No = @ID";
 
         public RoomService(IConfiguration configuration) : base (configuration)
         {
@@ -91,17 +91,103 @@ namespace RazorHotelDB23InCl.Services
         }
         public async Task<Room> GetRoomFromIdAsync(int roomNr, int hotelNr)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlCommand commmand = new SqlCommand(queryStringFromID, connection);
+                    commmand.Parameters.AddWithValue("@ID", roomNr);
+                    commmand.Parameters.AddWithValue("@HotelID", hotelNr);
+                    await commmand.Connection.OpenAsync();
+
+                    SqlDataReader reader = await commmand.ExecuteReaderAsync();
+                    if (reader.Read())
+                    {
+                        int roomnr = reader.GetInt32(0);
+                        char type = reader.GetString(2)[0];
+                        double pris = reader.GetDouble(3);
+                        int hotelnr = reader.GetInt32(1);
+                        Room room = new Room(roomnr, type, pris, hotelnr);
+                        return room;
+                    }
+                }
+                catch (SqlException sqlEx)
+                {
+                    Console.WriteLine("Database error " + sqlEx.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Generel fejl " + ex.Message);
+                }
+                finally
+                {
+
+                }
+            }
+            return null;
         }
 
-        public Task<Room> DeleteRoomAsync(int roomNr, int hotelNr)
+        public async Task<Room> DeleteRoomAsync(int roomNr, int hotelNr)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    Room room = await GetRoomFromIdAsync(roomNr, hotelNr);
+                    SqlCommand command = new SqlCommand(deleteSql, connection);
+                    command.Parameters.AddWithValue("@ID", roomNr);
+                    command.Parameters.AddWithValue("@HotelID", hotelNr);
+                    connection.Open();
+                    int noOfRows = await command.ExecuteNonQueryAsync();
+                    return room;
+                }
+                catch (SqlException sqlEx)
+                {
+                    Console.WriteLine("Database error " + sqlEx.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Generel fejl " + ex.Message);
+                }
+                finally
+                {
+                    //her kommer man altid
+                }
+            }
+            return null;
         }
 
         public async Task<bool> UpdateRoomAsync(Room room, int roomNr, int hotelNr)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(updateSql, connection);
+                    command.Parameters.AddWithValue("@ID", roomNr);
+                    command.Parameters.AddWithValue("@Types", room.Types);
+                    command.Parameters.AddWithValue("@Price", room.Pris);
+                    command.Parameters.AddWithValue("@HotelID", hotelNr);
+
+                    command.Connection.Open();
+                    int noOfRows = await command.ExecuteNonQueryAsync();
+                    return noOfRows == 1;
+
+                }
+                catch (SqlException sqlEx)
+                {
+                    Console.WriteLine("Database error " + sqlEx.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Generel fejl " + ex.Message);
+                }
+                finally
+                {
+
+                }
+            }
+            return false;
         }
     }
 }

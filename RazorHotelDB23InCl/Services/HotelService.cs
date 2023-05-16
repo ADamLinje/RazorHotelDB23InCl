@@ -82,10 +82,6 @@ namespace RazorHotelDB23InCl.Services
                 {
                     Console.WriteLine("Generel fejl " + ex.Message);
                 }
-                finally
-                {
-                    //her kommer man altid
-                }
             }
             return null;
         }
@@ -106,8 +102,8 @@ namespace RazorHotelDB23InCl.Services
                         while (await reader.ReadAsync())
                         {
                             int hotelNr = reader.GetInt32(0);
-                            String hotelNavn = reader.GetString(1);
-                            String hotelAdr = reader.GetString(2);
+                            string hotelNavn = reader.GetString(1);
+                            string hotelAdr = reader.GetString(2);
                             Hotel hotel = new Hotel(hotelNr, hotelNavn, hotelAdr);
                             hoteller.Add(hotel);
                         }
